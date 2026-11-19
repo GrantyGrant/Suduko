@@ -1,0 +1,99 @@
+/* Colours live here so they are easy to change */
+:root {
+  --page: #f4f1ea;
+  --cell: #ffffff;
+  --given: #1d2a3a;      /* numbers the puzzle starts with */
+  --typed: #2b6cd4;      /* numbers you type in */
+  --thin-line: #c9c4b8;
+  --thick-line: #1d2a3a;
+  --selected: #ffe08a;
+  --same-row-col: #f1ecdf;
+  --same-number: #fff1c2;
+  --mistake: #d93b3b;
+  --mistake-bg: #fde3e3;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--page);
+  font-family: system-ui, sans-serif;
+  color: var(--given);
+  display: flex;
+  justify-content: center;
+}
+
+main {
+  width: 100%;
+  max-width: 480px;
+  padding: 16px;
+  text-align: center;
+}
+
+h1 { margin: 8px 0 16px; }
+
+/* The board is a 9 by 9 grid of square cells */
+#board {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  border: 3px solid var(--thick-line);
+  background: var(--cell);
+  user-select: none;
+}
+
+.cell {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(18px, 6vw, 30px);
+  border-right: 1px solid var(--thin-line);
+  border-bottom: 1px solid var(--thin-line);
+  cursor: pointer;
+}
+
+/* Thick lines between the 3 by 3 boxes */
+.cell.box-right  { border-right: 3px solid var(--thick-line); }
+.cell.box-bottom { border-bottom: 3px solid var(--thick-line); }
+.cell.last-col   { border-right: none; }
+.cell.last-row   { border-bottom: none; }
+
+.cell.given { font-weight: 700; }
+.cell.typed { color: var(--typed); }
+
+.cell.same-row-col { background: var(--same-row-col); }
+.cell.same-number  { background: var(--same-number); }
+.cell.selected     { background: var(--selected); }
+.cell.mistake      { color: var(--mistake); background: var(--mistake-bg); }
+
+/* Number buttons under the board */
+#numbers {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+  margin-top: 16px;
+}
+
+button {
+  font: inherit;
+  font-size: 22px;
+  padding: 10px 0;
+  border: 2px solid var(--thick-line);
+  border-radius: 8px;
+  background: var(--cell);
+  color: var(--given);
+  cursor: pointer;
+}
+
+button:active { transform: translateY(1px); }
+
+#controls { margin-top: 16px; }
+#controls button { font-size: 18px; padding: 10px 20px; }
+
+#message {
+  min-height: 1.5em;
+  font-size: 22px;
+  font-weight: 700;
+}
