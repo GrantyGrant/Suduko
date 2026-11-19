@@ -10,6 +10,19 @@
   <main>
     <h1>Sudoku</h1>
 
+    <!-- Pick how hard the next puzzle is -->
+    <div id="difficulty">
+      <button data-level="easy">Easy</button>
+      <button data-level="medium">Medium</button>
+      <button data-level="hard">Hard</button>
+    </div>
+
+    <!-- Timer and mistake counter -->
+    <div id="status">
+      <span>⏱ <span id="timer">0:00</span></span>
+      <span>Mistakes: <span id="mistakes">0</span></span>
+    </div>
+
     <!-- The 81 squares are added here by sudoku.js -->
     <div id="board"></div>
 
@@ -17,10 +30,12 @@
     <div id="numbers"></div>
 
     <div id="controls">
+      <button id="notes">✏️ Notes: off</button>
       <button id="new-game">New game</button>
     </div>
 
     <p id="message"></p>
+    <p id="help">Keys: 1 to 9 to fill in, Backspace to clear, arrows to move, N for notes.</p>
   </main>
 
   <script src="sudoku.js"></script>

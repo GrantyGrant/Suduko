@@ -4,6 +4,7 @@
   --cell: #ffffff;
   --given: #1d2a3a;      /* numbers the puzzle starts with */
   --typed: #2b6cd4;      /* numbers you type in */
+  --note: #6b7280;       /* little pencil-mark numbers */
   --thin-line: #c9c4b8;
   --thick-line: #1d2a3a;
   --selected: #ffe08a;
@@ -11,6 +12,7 @@
   --same-number: #fff1c2;
   --mistake: #d93b3b;
   --mistake-bg: #fde3e3;
+  --active: #2b6cd4;     /* the chosen difficulty and Notes when it is on */
 }
 
 * { box-sizing: border-box; }
@@ -32,9 +34,50 @@ main {
   text-align: center;
 }
 
-h1 { margin: 8px 0 16px; }
+h1 { margin: 8px 0 12px; }
 
-/* The board is a 9 by 9 grid of square cells */
+/* ---------- Buttons ---------- */
+
+button {
+  font: inherit;
+  font-size: 22px;
+  padding: 10px 0;
+  border: 2px solid var(--thick-line);
+  border-radius: 8px;
+  background: var(--cell);
+  color: var(--given);
+  cursor: pointer;
+}
+
+button:active { transform: translateY(1px); }
+
+button.on {
+  background: var(--active);
+  border-color: var(--active);
+  color: #fff;
+}
+
+#difficulty {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+#difficulty button { font-size: 16px; padding: 6px 0; }
+
+/* ---------- Timer and mistakes ---------- */
+
+#status {
+  display: flex;
+  justify-content: space-between;
+  margin: 12px 2px 8px;
+  font-size: 18px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- The board ---------- */
+
+/* A 9 by 9 grid of square cells */
 #board {
   display: grid;
   grid-template-columns: repeat(9, 1fr);
@@ -63,12 +106,32 @@ h1 { margin: 8px 0 16px; }
 .cell.given { font-weight: 700; }
 .cell.typed { color: var(--typed); }
 
+/* Background colours. Later rules win, so "selected" is last:
+   the square you picked is always yellow, even if it holds a mistake. */
 .cell.same-row-col { background: var(--same-row-col); }
 .cell.same-number  { background: var(--same-number); }
-.cell.selected     { background: var(--selected); }
 .cell.mistake      { color: var(--mistake); background: var(--mistake-bg); }
+.cell.selected     { background: var(--selected); box-shadow: inset 0 0 0 2px var(--thick-line); }
 
-/* Number buttons under the board */
+/* Pencil marks: a tiny 3 by 3 grid inside one square */
+.notes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  width: 100%;
+  height: 100%;
+  font-size: clamp(8px, 2.4vw, 12px);
+  color: var(--note);
+  line-height: 1;
+}
+
+.notes span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ---------- Under the board ---------- */
+
 #numbers {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -76,24 +139,19 @@ h1 { margin: 8px 0 16px; }
   margin-top: 16px;
 }
 
-button {
-  font: inherit;
-  font-size: 22px;
-  padding: 10px 0;
-  border: 2px solid var(--thick-line);
-  border-radius: 8px;
-  background: var(--cell);
-  color: var(--given);
-  cursor: pointer;
+#controls {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 8px;
 }
 
-button:active { transform: translateY(1px); }
-
-#controls { margin-top: 16px; }
-#controls button { font-size: 18px; padding: 10px 20px; }
+#controls button { font-size: 18px; }
 
 #message {
   min-height: 1.5em;
   font-size: 22px;
   font-weight: 700;
 }
+
+#help { font-size: 13px; color: var(--note); }
